@@ -14,14 +14,15 @@ export default class BookcaseItem extends Component {
   }
   render() {
     return (
-      <TouchableOpacity onPress={this._onEditBook}>
+      <TouchableOpacity onPress={this._onEditBook} key={this.props.id}>
         <View style={styles.rowContainer}>
           <Image source={{ uri: this.props.thumbnail }}
             style={styles.thumbnail}
             resizeMode="contain"
           />
           <View style={styles.rowText}>
-            <Text>{ this.props.title }</Text>
+            <Text numberOfLines={2}>{ this.props.title }</Text>
+            <Text numberOfLines={1}>{ this.props.author }</Text>
           </View>
         </View>
       </TouchableOpacity>

@@ -17,35 +17,18 @@ export default class Boookcase extends Component {
     this.unsubscribe = null;
     this.state = {
       loading: true,
-      books: [
-        {
-          id: 1,
-          title: 'Harry Porter and the Goblet of Fire',
-          author: 'J. K. Rowling',
-          thumbnail: 'https://covers.openlibrary.org/w/id/7984916-M.jpg'
-        },
-        {
-          id: 2,
-          title: 'The Hobbit',
-          author: 'J. R. R. Tolkien',
-          thumbnail: 'https://covers.openlibrary.org/w/id/6979861-M.jpg'
-        },
-        {
-          id: 3,
-          title: '1984',
-          author: 'George Orwell',
-          thumbnail: 'https://covers.openlibrary.org/w/id/7222246-M.jpg'
-        }
-      ]
+      books: []
     }
   }
 
   _renderItem = ({ item }) => (
     <BookcaseItem
+      key={item.id}
       id={item.id}
       title={item.title}
       author={item.author}
       thumbnail={item.thumbnail}
+      navigation={this.props.navigation}
     />
   )
 
@@ -68,14 +51,6 @@ export default class Boookcase extends Component {
 
   componentDidMount() {
     this.unsubscribe = this.ref.onSnapshot(this.onCollectionUpdate)
-    // return fetch('https://console.firebase.google.com/project/book-case-4025c/books')
-    //   .then((response) => response.json())
-    //   .then((responseJson) => {
-    //     this.setState({books: responseJson});
-    //   })
-    //   .catch((error) => {
-    //     console.error(error);
-    //   });
   }
   render() {
     if (this.state.loading) {

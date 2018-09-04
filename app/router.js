@@ -23,7 +23,7 @@ export const Tabs = TabNavigator({
     screen: Explore,
     navigationOptions: {
       tabBarLabel: 'Explore',
-      tabBarIcon: ({ tintColor }) => <Icon name="ios-map-outline" type="ionicon" size={28} color={tintColor} />
+      tabBarIcon: ({ tintColor }) => <Icon name="ios-map" type="ionicon" size={28} color={tintColor} />
     }
   },
   'Add Book': {
@@ -44,7 +44,7 @@ export const Tabs = TabNavigator({
     screen: Profile,
     navigationOptions: {
       tabBarLabel: 'Profile',
-      tabBarIcon: ({ tintColor }) => <Icon name="ios-person-outline" type="ionicon" size={28} color={tintColor} />
+      tabBarIcon: ({ tintColor }) => <Icon name="ios-person" type="ionicon" size={28} color={tintColor} />
     }
   }
 });
@@ -59,5 +59,9 @@ export const createRootNavigator = () => {
         }
       }
     },
+    {
+      headerMode: 'none',
+      mode: 'modal'
+    }
   );
 };
