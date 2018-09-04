@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import firebase from 'react-native-firebase';
 import {
   StatusBar,
   StyleSheet,
@@ -12,7 +13,10 @@ import BookcaseItem from './bookcaseitem';
 export default class Boookcase extends Component {
   constructor(props) {
     super(props);
+    this.ref = firebase.firestore().collection('books');
+    this.unsubscribe = null;
     this.state = {
+      loading: true,
       books: [
         {
           id: 1,
@@ -47,17 +51,36 @@ export default class Boookcase extends Component {
 
   _keyExtractor = (item, index) => item.id
 
-  componentDidMount() {
-    return fetch('https://console.firebase.google.com/project/book-case-4025c/books')
-      .then((response) => response.json())
-      .then((responseJson) => {
-        this.setState({books: responseJson});
-      })
-      .catch((error) => {
-        console.error(error);
+  onCollectionUpdate = (querySnapshot) => {
+    const books = [];
+    querySnapshot.forEach((doc) => {
+      const { title, author, thumbnail } = doc.data();
+      books.push({
+        key: doc.id, doc, title, author, thumbnail
       });
+      this.setState({books, loading: false});
+    });
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
+
+  componentDidMount() {
+    this.unsubscribe = this.ref.onSnapshot(this.onCollectionUpdate)
+    // return fetch('https://console.firebase.google.com/project/book-case-4025c/books')
+    //   .then((response) => response.json())
+    //   .then((responseJson) => {
+    //     this.setState({books: responseJson});
+    //   })
+    //   .catch((error) => {
+    //     console.error(error);
+    //   });
   }
   render() {
+    if (this.state.loading) {
+      return null;
+    }
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />

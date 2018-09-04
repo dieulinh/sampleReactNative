@@ -6,7 +6,9 @@
  */
 
 #import "AppDelegate.h"
-#import <Firebase.h>
+@import Firebase;
+
+
 
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
@@ -15,6 +17,11 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  // Use Firebase library to configure APIs
+  [FIRApp configure];
+  [FIRDatabase database].persistenceEnabled = YES
+  
+  FIRFirestore *defaultFirestore = [FIRFirestore firestore];
   NSURL *jsCodeLocation;
 
   jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
