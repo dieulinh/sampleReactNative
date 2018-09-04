@@ -19,7 +19,7 @@
 {
   // Use Firebase library to configure APIs
   [FIRApp configure];
-  [FIRDatabase database].persistenceEnabled = YES
+  [FIRDatabase database].persistenceEnabled = YES;
   
   FIRFirestore *defaultFirestore = [FIRFirestore firestore];
   NSURL *jsCodeLocation;
