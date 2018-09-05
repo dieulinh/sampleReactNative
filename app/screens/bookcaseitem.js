@@ -8,13 +8,16 @@ import {
   } from 'react-native';
 import { Icon } from 'react-native-elements';
 export default class BookcaseItem extends Component {
-  _onEditBook = () => {
-    let id = this.props.id;
-    this.props.navigation.navigate('EditBook', {id: id});
+  constructor(props) {
+    super(props);
+  }
+
+  _onEditBook = (id) => {
+    this.props.navigation.navigate('EditBook', {id: this.props.id});
   }
   render() {
     return (
-      <TouchableOpacity onPress={this._onEditBook} key={this.props.id}>
+      <TouchableOpacity onPress={ () => this.props.navigation.navigate('EditBook', {id: this.props.id, title: this.props.title}) } key={this.props.id}>
         <View style={styles.rowContainer}>
           <Image source={{ uri: this.props.thumbnail }}
             style={styles.thumbnail}

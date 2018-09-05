@@ -37,9 +37,9 @@ export default class Boookcase extends Component {
   onCollectionUpdate = (querySnapshot) => {
     const books = [];
     querySnapshot.forEach((doc) => {
-      const { title, author, thumbnail } = doc.data();
+      const { title, author, thumbnail, id } = doc.data();
       books.push({
-        key: doc.id, doc, title, author, thumbnail
+        key: doc.id, doc, id, title, author, thumbnail
       });
       this.setState({books, loading: false});
     });

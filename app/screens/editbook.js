@@ -5,7 +5,8 @@ import {
   Text,
   StyleSheet,
   TextInput,
-  Button
+  Button,
+  Image
 } from 'react-native';
 
 export default class EditBook extends Component {
@@ -13,7 +14,8 @@ export default class EditBook extends Component {
     super(props);
 
     this.state = {
-      title: this.props.title,
+      id: this.props.id,
+      title: this.props.navigation.state.params.title,
       author: this.props.author,
       thumbnail: this.props.thumbnail
     };
@@ -21,9 +23,9 @@ export default class EditBook extends Component {
   }
    _saveBook() {
     var db = firebase.firestore();
-    console.log()
-    console.log(this.props.id);
-    var sfDocRef = db.collection("books").doc(this.props.id);
+    var bookId = this.props.navigation.state.params.id;
+    var title = this.state.title;
+    var sfDocRef = db.collection("books").doc(bookId);
     db.runTransaction((transaction) => {
       return transaction.get(sfDocRef).then(function(sfDoc) {
         if (!sfDoc.exists) {
@@ -31,7 +33,7 @@ export default class EditBook extends Component {
         }
 
         var newBook = sfDoc.data();
-        transaction.update(sfDocRef, { title: this.state.title });
+        transaction.update(sfDocRef, { title: title });
         return newBook;
       });
     }).then((newBook) => {
@@ -48,13 +50,14 @@ export default class EditBook extends Component {
         <TextInput
           style={ { height: 40, borderColor: 'gray', borderWidth: 1 } }
           onChangeText={(title) => this.setState({title})}
-          value={this.state.title}
+
         />
         <TextInput
           style={ { height: 40, borderColor: 'gray', borderWidth: 1 } }
           onChangeText={(author) => this.setState({author})}
           value={this.state.author}
         />
+        <Image source={ { uri: this.state.thumbnail } } resizeMode="contain"/>
         <Button title="Save book"
           onPress={ () => this._saveBook() }
         />

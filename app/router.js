@@ -38,7 +38,7 @@ export const Tabs = TabNavigator({
     screen: Lists,
     navigationOptions: {
       tabBarLabel: 'Lists',
-      tabBarIcon: ({ tintColor }) => <Icon name="lists" type="entypo" size={28} color={tintColor} />
+      tabBarIcon: ({ tintColor }) => <Icon name="list" type="entypo" size={28} color={tintColor} />
     }
   },
   'Profile': {
