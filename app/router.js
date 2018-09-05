@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Dimensions, Platform } from 'react-native';
-import { StackNavigator, TabNavigator } from 'react-navigation';
+import { StackNavigator, TabNavigator, createStackNavigator, createBottomTabNavigator, withNavigation } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 
 import Bookcase from './screens/bookcase';
@@ -8,6 +8,7 @@ import Explore from './screens/explore';
 import AddBook from './screens/addbook';
 import Lists from './screens/lists';
 import Profile from './screens/profile';
+import EditBook from './screens/editbook';
 
 let screen = Dimensions.get('window');
 
@@ -49,14 +50,37 @@ export const Tabs = TabNavigator({
   }
 });
 
+export const BookcaseStack = createStackNavigator({
+  Bookcase: {
+    screen: Bookcase,
+    navigationOptions: ({navigation}) => ({
+      header: null
+    })
+  },
+  EditBook: {
+    screen: EditBook,
+    navigationOptions: ({navigation}) => ({
+      header: null,
+      tabBarVisible: false,
+      gesturesEnabled: false
+    })
+  }
+});
+
 export const createRootNavigator = () => {
-  return StackNavigator(
+  return createStackNavigator(
     {
       Tabs: {
         screen: Tabs,
-        navigationOptions: {
+        navigationOptions: ({navigation}) => ({
           gesturesEnabled: false
-        }
+        })
+      },
+      BookcaseStack: {
+        screen: BookcaseStack,
+        navigationOptions: ({navigation}) => ({
+          gesturesEnabled: false
+        })
       }
     },
     {
